@@ -1,0 +1,12 @@
+# Dependencias de Python para el ROBOT (Raspbian Buster · Python 3.7)
+#
+# El SDK oficial de MCP (paquete 'mcp') exige Python >= 3.10 y NO se puede
+# instalar en el robot. No pasa nada: el agente de voz del robot funciona con
+# el backend 'rpc' (habla directamente con el JSON-RPC del firmware, sin SDK).
+# El servidor MCP se ejecuta en tu PC, que sí tiene Python moderno.
+#
+# El resto del robot no necesita nada de terceros: todo lo demás es stdlib.
+
+# VAD para detectar voz. La última versión (2.0.14.post1) exige Python >= 3.10,
+# así que se fija la 2.0.14, que trae wheel para cp37 + aarch64.
+webrtcvad-wheels==2.0.14

@@ -1,0 +1,45 @@
+# ---------------------------------------------------------------------------
+# PontiBot — .gitignore
+# ---------------------------------------------------------------------------
+
+# La clave de NVIDIA vive aqui. NO subir.
+.env
+.env.*
+!.env.example
+
+# Secretos y credenciales de cualquier tipo
+*.pem
+*.key
+secrets/
+credentials/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editores y SO
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Datos locales y logs
+*.log
+logs/
+backup/
+backups/
+nvidia_catalog.json
+*.wav.tmp
+
+# Capturas y salidas temporales
+/tmp/
+out/
+*.tmp

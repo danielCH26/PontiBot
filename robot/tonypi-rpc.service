@@ -1,0 +1,27 @@
+[Unit]
+# Servicio "solo RPC" del TonyPi: mismo JSON-RPC (:9030) y mismo MJPG (:8080)
+# que el de fábrica, pero SIN el programa de juego de fábrica (modo de prueba).
+#
+# Sustituye a tonypi.service:
+#   sudo systemctl disable tonypi.service
+#   sudo systemctl enable --now tonypi-rpc.service
+#
+# ROLLBACK:
+#   sudo systemctl disable --now tonypi-rpc.service
+#   sudo systemctl enable --now tonypi.service
+Description=TonyPi RPC-only service (sin modo de prueba)
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/TonyPi
+ExecStart=/usr/bin/python3 /home/pi/TonyPi/TonyPi_rpc_only.py
+Restart=on-failure
+RestartSec=5
+User=pi
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,8 @@
+# Solo hace falta el SDK de MCP. El cliente RPC usa solo la stdlib.
+mcp>=2.0
+
+# Opcional: si prefieres el paquete fastmcp standalone
+# fastmcp>=4
+
+# Opcional: para el agente de voz con ASR/TTS en la nube ya se usa urllib.
+# pip install openai      # solo si prefieres su SDK en vez de HTTP directo

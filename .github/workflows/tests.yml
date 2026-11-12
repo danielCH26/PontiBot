@@ -1,0 +1,63 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pruebas:
+    name: Suite de pruebas (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 3.10 es el minimo del SDK `mcp`; 3.12 es el mas usado hoy.
+        python-version: ["3.10", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Preparar Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compilar todos los .py
+        run: python -m compileall -q pc tools tests robot patches
+
+      - name: Selftest (protocolo real contra el simulador)
+        run: python tools/selftest.py
+
+      - name: Memoria
+        run: python tests/test_memory.py
+
+      - name: Almacenamiento
+        run: python tests/test_storage.py
+
+      - name: Extremo a extremo del servidor MCP
+        run: python tools/e2e_mcp_test.py
+
+      - name: Comprobar que el .env NO está versionado
+        run: |
+          if git ls-files --error-unmatch .env >/dev/null 2>&1; then
+            echo "::error::.env está en el repositorio. ¡Rota la clave de NVIDIA!"
+            exit 1
+          fi
+          echo "OK: .env no está versionado"
+
+      - name: Comprobar que no hay secretos en el código
+        run: |
+          # -P (PCRE) para descartar los placeholders tipo nvapi-TU_CLAVE_AQUI
+          if grep -rInP "nvapi-(?!TU_CLAVE)[A-Za-z0-9_-]{20,}" --exclude-dir=.git . ; then
+            echo "::error::se ha encontrado una clave de NVIDIA en el código"
+            exit 1
+          fi
+          echo "OK: no hay claves de NVIDIA en el código"

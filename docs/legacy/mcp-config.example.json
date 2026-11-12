@@ -1,0 +1,15 @@
+{
+  "_comentario": "Copia este bloque en la configuracion MCP de tu cliente (Claude Desktop, Claude Code, etc.) y ajusta TONYPI_HOST con la IP del robot. En Claude Desktop el archivo va en claude_desktop_config.json; en Claude Code: claude mcp add pontibot --env TONYPI_HOST=192.168.1.50 -- python /ruta/al/server.py",
+  "mcpServers": {
+    "pontibot": {
+      "command": "python3",
+      "args": ["/ruta/absoluta/al/tonypi-mcp/server.py"],
+      "env": {
+        "TONYPI_HOST": "192.168.1.50",
+        "TONYPI_RPC_PORT": "9030",
+        "TONYPI_MJPG_PORT": "8080",
+        "PYTHONPATH": "/ruta/absoluta/al/tonypi-mcp"
+      }
+    }
+  }
+}
