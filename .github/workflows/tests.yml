@@ -56,7 +56,8 @@ jobs:
       - name: Comprobar que no hay secretos en el código
         run: |
           # -P (PCRE) para descartar los placeholders tipo nvapi-TU_CLAVE_AQUI
-          if grep -rInP "nvapi-(?!TU_CLAVE)[A-Za-z0-9_-]{20,}" --exclude-dir=.git . ; then
+          # -I ignora los binarios (el .mp4 del repo no es texto)
+          if grep -rIlP "nvapi-(?!TU_CLAVE)[A-Za-z0-9_-]{20,}" --exclude-dir=.git . ; then
             echo "::error::se ha encontrado una clave de NVIDIA en el código"
             exit 1
           fi

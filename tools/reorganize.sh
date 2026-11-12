@@ -162,7 +162,7 @@ if [ ! -f .env.example ]; then
   if [ "$DRY_RUN" -eq 0 ]; then
     cat > .env.example <<'EOF'
 # Plantilla. Copia a .env y rellena. NUNCA subas .env al repo ni lo copies al robot.
-NVIDIA_API_KEY=nvapi-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+NVIDIA_API_KEY=nvapi-TU_CLAVE_AQUI
 LLM_MODEL=nvidia/nemotron-3.5-bolt-e4b
 
 # Audio (los escribe tools/bt_headset_pc.sh)
